@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Doctor Dashboard</h1>
+<p>Welcome, Dr. {{ user.username }}</p>
+<h3>Your Schedule</h3>
+<ul>
+    {% for slot in slots %}
+        <li>{{ slot.start_time }} - {% if slot.is_booked %} Booked {% else %} Available {% endif %}</li>
+    {% empty %}
+        <li>No slots created yet.</li>
+    {% endfor %}
+</ul>
+<a href="/admin/appointments/slot/add/">Create New Slot</a>
+{% endblock %}

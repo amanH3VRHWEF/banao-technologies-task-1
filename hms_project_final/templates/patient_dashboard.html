@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Available Appointments</h2>
+    <table border="0" width="100%">
+        <tr><th>Doctor</th><th>Time</th><th>Action</th></tr>
+        {% for slot in slots %}
+        <tr>
+            <td>Dr. {{ slot.doctor.username }}</td>
+            <td>{{ slot.start_time }}</td>
+            <td><a href="{% url 'book_appointment' slot.id %}" class="btn btn-success">Book Now</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

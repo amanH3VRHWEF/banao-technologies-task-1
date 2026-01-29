@@ -1,0 +1,13 @@
+from django.contrib import admin  # This was missing!
+from django.urls import path
+from django.contrib.auth import views as auth_views
+from appointments import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.dashboard, name='dashboard'),
+    path('signup/', views.signup_view, name='signup'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('book/<int:slot_id>/', views.book_appointment, name='book_appointment'),
+]

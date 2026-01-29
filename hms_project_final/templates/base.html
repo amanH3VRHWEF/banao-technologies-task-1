@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS | Hospital Management System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Essential base layout styles */
+        :root { --primary: #2c3e50; --accent: #3498db; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f6; }
+        .navbar { background: var(--primary); color: white; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; }
+        .nav-links { display: flex; align-items: center; gap: 20px; }
+        .nav-link { color: white; text-decoration: none; font-weight: 500; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .logout-btn { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .user-info { font-size: 0.9rem; color: #bdc3c7; margin-right: 10px; }
+        .footer { text-align: center; padding: 20px; color: #7f8c8d; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'dashboard' %}" class="nav-brand">Medical HMS</a>
+
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <span class="user-info">User: {{ user.username }} ({{ user.email }})</span>
+                <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Login</a>
+                <a href="{% url 'signup' %}" class="nav-link">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding:15px; margin-bottom:20px; border-radius:4px;
+                            background-color: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <hr>
+        <p>&copy; 2024 Hospital Management System | AWS Lambda & Google Calendar Integrated</p>
+    </footer>
+
+</body>
+</html>
