@@ -2,7 +2,6 @@ from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 
 def create_google_calendar_event(user, slot):
-    # Assuming you've stored the user's OAuth tokens in a SocialToken model
     creds = Credentials(token=user.token, refresh_token=user.refresh_token)
     service = build('calendar', 'v3', credentials=creds)
 
